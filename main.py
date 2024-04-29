@@ -60,13 +60,13 @@ while(True):
         for i in range(2018):
             difficulty_threshold = "8888888888888888888888888888888888888888888888888888888888888888"
             height = last_block.getHeight()+1
-            curr_time = time.time()
+            # curr_time = time.time()
             for nonce in range(10):
-
-                new_test_block = Block(1, difficulty_threshold, last_block.getHash(), curr_time, nonce, "Test Miner", "Block Transaction number" + str(height), height)
+                new_test_block = Block(1, difficulty_threshold, last_block.getHash(), time.time(), nonce, "Test Miner", "Block Transaction number" + str(height), height)
                 if blockchain.verifyAndAdd(new_test_block):
                     last_block = new_test_block
-                    print("Block added.")
+                    print("Block added.\n")
+                    time.sleep(0.01)
                     break
                 else:
                     print("Trying another nonce...")

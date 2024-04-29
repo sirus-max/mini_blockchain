@@ -35,7 +35,7 @@ class Blockchain:
             print("Previous Block is not present in the blockchain.")
             isValid = False
             return False
-        
+
         header = block.getHeader()
 
         if header.previousHash != previousBlock.getHash():
@@ -64,9 +64,10 @@ class Blockchain:
             return False
         
         difficulty_target = self.calculateBlockDifficulty(block)
+        
         if block.getDifficulty() != difficulty_target:
             print("Difficulty does not match.")
-            print("Expected value: ", difficulty_target)
+            print("Expected value: ", int("0x"+difficulty_target,base=16))
             print(block.getDifficulty())
             print(difficulty_target)
             isValid = False
@@ -95,18 +96,15 @@ class Blockchain:
             targetTime = 2 * 7 * 24 * 60 * 60  # 2 weeks in seconds
              
             endBlock = toBeAddedBlock
-            actualTime = endBlock.getTimeStamp() - toBeAddedBlock.previous_2016_block_timestamp
+            actualTime = endBlock.getTimeStamp() - prevBlock.previous_2016_block_timestamp
             print(endBlock.getTimeStamp())
-        
 
-
-            
-            print(toBeAddedBlock.previous_2016_block_timestamp)
+            # print(toBeAddedBlock.previous_2016_block_timestamp)
             # Calculate the adjustment factor
             adjustmentFactor = actualTime / targetTime
-            print(actualTime)
-            
-            print(adjustmentFactor)
+            print("Actual Time Taken for 2016 Blocks (in ms): ", actualTime * 1000)
+            print("\n")
+            # print(adjustmentFactor)
             
             # Adjust the difficulty
             diff = diff * adjustmentFactor
@@ -140,12 +138,10 @@ class Blockchain:
             print("Previous Block is not present in the blockchain.")
             return False
 
-        
-        
+
         if not self.verifyBlock(toBeAddedBlock):
             print("Block verification failed.")
             return False
-        
         
 
         print("Adding New Block to Blockchain")
